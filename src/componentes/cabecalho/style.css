@@ -1,0 +1,8 @@
+.bg{
+    background-image: url(../img/backgraud.jpg);
+    background-size: cover;
+}
+
+.nav-icons .nav-icon {
+    margin-right: 10px; /* Defina a margem direita conforme desejado */
+  }
