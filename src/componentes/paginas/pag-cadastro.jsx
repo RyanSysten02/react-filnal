@@ -1,12 +1,13 @@
-import Banner from "../Pag-inicial/Banner";
+import FormCadastro from "../formulario/Cadastro";
 import Pagina from "../pagina";
 
-export default function Telainicial(){
+export default function TelaCadastro(){
     return(
       <div>
          <Pagina>
-            <Banner/>
+            <FormCadastro/>
          </Pagina>
+
       </div>
        
   )

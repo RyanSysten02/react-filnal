@@ -1,23 +1,55 @@
-import { useState } from 'react';
 import { Form, Button, Stack, Row, Col } from 'react-bootstrap';
 import './style.css';
+import { useRef } from 'react';
 
-function FormCadastro() {
-  const [validated, setValidated] = useState(false);
+function FormCadastro(props) {
+  const formRef = useRef(null);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
+  const cadastrarcandidato = (event) => {
+    event.preventDefault();
+    const form = formRef.current;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
     }
+    form.classList.add('was-validated');
 
-    setValidated(true);
+    if (form.checkValidity() === true) {
+      const formData = {
+        nome: form.nome.value,
+        cpf: form.cpf.value,
+        cnh: form.cnh.value,
+        dnasc: form.dnasc.value,
+      };
+
+      fetch("http://localhost:4000/motorista", {
+        method: 'POST',
+        headers: {
+          "Content-Type": 'application/json' // Alterado para indicar JSON
+        },
+        body: JSON.stringify(formData) // Convertendo para JSON
+      })
+      .then((resposta) => {
+        if (!resposta.ok) {
+          throw new Error('Erro na requisição: ' + resposta.status);
+        }
+        return resposta.json();    
+      })
+      .then((dados) => {
+        if (dados.status) {
+          alert(dados.mensagem + ". Os dados foram registrados com sucesso");
+        } else {
+          alert(dados.mensagem);
+        }
+      })
+      .catch((erro) => {
+        alert('Erro ao enviar a requisição ' + erro.message);
+      });
+    }
   };
 
   return (
     <div className='cont'>
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form ref={formRef} noValidate onSubmit={cadastrarcandidato}>
         <h2 className='titulo'>FICHA DE SOLICITAÇÃO DE EMPREGO</h2>
         <div className='blocoform'>
           <Row>
@@ -69,7 +101,7 @@ function FormCadastro() {
               </Form.Group>
             </Col>
             <Col>
-              <Form.Group controlId="dt_nasc">
+              <Form.Group controlId="dnasc">
                 <Form.Label>Data Nasc.</Form.Label>
                 <Form.Control required type="date" placeholder="Digite sua data de nascimento DD/MM/AAAA" />
                 <Form.Control.Feedback type="invalid">
@@ -322,7 +354,7 @@ function FormCadastro() {
     </Form.Group>
     </Col>
     <Col>
-    <Form.Group controlId="cnh_num">
+    <Form.Group controlId="cnh">
       <Form.Label>Número da CNH</Form.Label>
       <Form.Control required type="text" placeholder="Digite o número da sua CNH" />
       <Form.Control.Feedback type="invalid">
@@ -444,7 +476,7 @@ function FormCadastro() {
 </div>  
 <hr className='hr'/>
         <Stack gap={2} className="col-md-5 mx-auto pt-5">
-          <Button type="submit" variant="success">Cadastrar</Button>
+        <Button onClick={cadastrarcandidato} variant="success">Cadastrar</Button>
           <Button variant="outline-secondary">Cancelar</Button>
         </Stack>
       </Form>

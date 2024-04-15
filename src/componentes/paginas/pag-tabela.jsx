@@ -1,12 +1,13 @@
-import Banner from "../Pag-inicial/Banner";
 import Pagina from "../pagina";
+import TableCadastro from "../tabela/tabelacad";
 
-export default function Telainicial(){
+export default function BuscaTabela(){
     return(
       <div>
          <Pagina>
-            <Banner/>
+            <TableCadastro/>
          </Pagina>
+
       </div>
        
   )

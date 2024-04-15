@@ -11,7 +11,7 @@ function Cabecalho() {
   return (
     <Navbar collapseOnSelect expand="lg" className='bg'>
       <Container>
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
           <svg width="20" 
           height="20" 
           viewBox="0 0 256 225" 
@@ -33,10 +33,10 @@ function Cabecalho() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-          <Nav.Link href="#pricing">
+          <Nav.Link href="/Cadastro">
             <LiaClipboardListSolid />
             Cadastrar</Nav.Link>
-          <Nav.Link href="#features">
+          <Nav.Link href="/buscar">
             <AiOutlineFileSearch />
             Buscar candidatos</Nav.Link>
           </Nav>
